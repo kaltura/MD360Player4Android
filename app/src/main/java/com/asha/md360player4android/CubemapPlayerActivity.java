@@ -5,17 +5,20 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.DrawableRes;
 
 import com.asha.vrlib.MDVRLibrary;
 import com.asha.vrlib.model.MDRay;
 import com.asha.vrlib.plugins.hotspot.IMDHotspot;
 import com.asha.vrlib.texture.MD360BitmapTexture;
 import com.asha.vrlib.texture.MD360CubemapTexture;
+import com.google.android.apps.muzei.render.GLTextureView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -64,7 +67,7 @@ public class CubemapPlayerActivity extends MD360PlayerActivity {
             }
 
             @Override
-            public void onBitmapFailed(Drawable errorDrawable) {
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
             }
 
@@ -75,7 +78,7 @@ public class CubemapPlayerActivity extends MD360PlayerActivity {
         };
 
         Log.d(TAG, "load image with max texture size:" + callback.getMaxTextureSize());
-        Picasso.with(getApplicationContext())
+        Picasso.get()
                 .load(uri)
                 .resize(callback.getMaxTextureSize(),callback.getMaxTextureSize())
                 .onlyScaleDown()
@@ -143,7 +146,7 @@ public class CubemapPlayerActivity extends MD360PlayerActivity {
                     }
                 })
                 .pinchEnabled(true)
-                .build(findViewById(R.id.gl_view));
+                .build((GLSurfaceView) findViewById(R.id.gl_view));
     }
 
     private Uri getDrawableUri(@DrawableRes int resId){

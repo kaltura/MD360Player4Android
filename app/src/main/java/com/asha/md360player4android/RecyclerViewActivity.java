@@ -8,14 +8,16 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.DrawableRes;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.DrawableRes;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.asha.vrlib.MDVRLibrary;
 import com.asha.vrlib.model.MDHitEvent;
@@ -53,7 +55,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         manager = new VRLibManager(this);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         final FeedAdapter adapter = new FeedAdapter();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(null);
@@ -125,8 +127,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
 
         public FeedVRVH(ViewGroup vp) {
             super(vp, R.layout.feed_panorama_layout);
-            text = (TextView) itemView.findViewById(R.id.feed_text);
-            glTextureView = (GLTextureView) itemView.findViewById(R.id.feed_texture_view);
+            text = itemView.findViewById(R.id.feed_text);
+            glTextureView = itemView.findViewById(R.id.feed_texture_view);
             parent = (ViewGroup) glTextureView.getParent();
         }
 
@@ -162,7 +164,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
                 return;
             }
 
-            Picasso.with(itemView.getContext()).load(model.uri).into(new Target() {
+            Picasso.get().load(model.uri).into(new Target() {
                 @Override
                 public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                     vrlib.onTextureResize(bitmap.getWidth(), bitmap.getHeight());
@@ -170,7 +172,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
 
                 }
 

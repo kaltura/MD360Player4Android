@@ -1,6 +1,7 @@
 package com.asha.md360player4android;
 
 import android.net.Uri;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.Surface;
 import android.view.View;
@@ -11,6 +12,7 @@ import com.asha.vrlib.MD360DirectorFactory;
 import com.asha.vrlib.MDVRLibrary;
 import com.asha.vrlib.model.BarrelDistortionConfig;
 import com.asha.vrlib.model.MDPinchConfig;
+import com.google.android.apps.muzei.render.GLTextureView;
 
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 
@@ -102,7 +104,7 @@ public class VideoPlayerActivity extends MD360PlayerActivity {
                 })
                 .projectionFactory(new CustomProjectionFactory())
                 .barrelDistortionConfig(new BarrelDistortionConfig().setDefaultEnabled(false).setScale(0.95f))
-                .build(findViewById(R.id.gl_view));
+                .build((GLSurfaceView) findViewById(R.id.gl_view));
     }
 
     @Override

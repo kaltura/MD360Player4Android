@@ -11,13 +11,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.util.SimpleArrayMap;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.collection.SimpleArrayMap;
 
 import com.asha.vrlib.MDDirectorCamUpdate;
 import com.asha.vrlib.MDVRLibrary;
@@ -557,8 +558,8 @@ public abstract class MD360PlayerActivity extends Activity {
                 }
 
                 @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-                    targetMap.remove(uri);
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
                 }
 
                 @Override
@@ -567,7 +568,7 @@ public abstract class MD360PlayerActivity extends Activity {
                 }
             };
             targetMap.put(uri, target);
-            Picasso.with(getApplicationContext()).load(uri).resize(callback.getMaxTextureSize(),callback.getMaxTextureSize()).onlyScaleDown().centerInside().memoryPolicy(NO_CACHE, NO_STORE).into(target);
+            Picasso.get().load(uri).resize(callback.getMaxTextureSize(),callback.getMaxTextureSize()).onlyScaleDown().centerInside().memoryPolicy(NO_CACHE, NO_STORE).into(target);
         }
     }
 }
